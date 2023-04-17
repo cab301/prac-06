@@ -1,0 +1,9 @@
+C:\Users\tangm\OneDrive - Queensland University of Technology\Desktop\CAB301 (Semester 1, 2020)\Teaching Resources\Week 6\Exercise4-Code\Exercise4-Code\bin\Debug\Exercise4-Code.exe.config
+C:\Users\MELTUser01\Downloads\prac-06\Exercise4-Code\Exercise4-Code\bin\Debug\Exercise4-Code.exe.config
+C:\Users\MELTUser01\Downloads\prac-06\Exercise4-Code\Exercise4-Code\bin\Debug\Exercise4-Code.exe
+C:\Users\MELTUser01\Downloads\prac-06\Exercise4-Code\Exercise4-Code\bin\Debug\Exercise4-Code.pdb
+C:\Users\MELTUser01\Downloads\prac-06\Exercise4-Code\Exercise4-Code\obj\Debug\Exercise4-Code.csproj.AssemblyReference.cache
+C:\Users\MELTUser01\Downloads\prac-06\Exercise4-Code\Exercise4-Code\obj\Debug\Exercise4-Code.csproj.SuggestedBindingRedirects.cache
+C:\Users\MELTUser01\Downloads\prac-06\Exercise4-Code\Exercise4-Code\obj\Debug\Exercise4-Code.csproj.CoreCompileInputs.cache
+C:\Users\MELTUser01\Downloads\prac-06\Exercise4-Code\Exercise4-Code\obj\Debug\Exercise4-Code.exe
+C:\Users\MELTUser01\Downloads\prac-06\Exercise4-Code\Exercise4-Code\obj\Debug\Exercise4-Code.pdb
