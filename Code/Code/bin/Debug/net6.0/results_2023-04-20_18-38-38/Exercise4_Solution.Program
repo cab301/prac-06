@@ -1,0 +1,74 @@
+╔═══════════════════Exercise4_Solution.Program═══════════════════╗
+╟─────────────────Test HeapSort with empty array─────────────────╢
+> Input:    Test HeapSort with empty array
+> Expected: Method threw an exception: (System.Reflection.TargetInvocationException) with message Index was outside the bounds of the array.
+> Actual:   No exception should be thrown
+╟─────────────────────────────Failed─────────────────────────────╢
+╠════════════════════════════════════════════════════════════════╣
+╟─────────────────Test HeapSort with one element─────────────────╢
+> Input:    Test HeapSort with one element
+> Expected: Method threw an exception: (System.Reflection.TargetInvocationException) with message Index was outside the bounds of the array.
+> Actual:   No exception should be thrown
+╟─────────────────────────────Failed─────────────────────────────╢
+╠════════════════════════════════════════════════════════════════╣
+╟────Test HeapSort with five elements, sorted in random order────╢
+> Input:    Test HeapSort with five elements, sorted in random order
+> Expected: Method threw an exception: (System.Reflection.TargetInvocationException) with message Index was outside the bounds of the array.
+> Actual:   No exception should be thrown
+╟─────────────────────────────Failed─────────────────────────────╢
+╠════════════════════════════════════════════════════════════════╣
+╟──Test HeapSort with five elements, sorted in ascending order───╢
+> Input:    Test HeapSort with five elements, sorted in ascending order
+> Expected: Method threw an exception: (System.Reflection.TargetInvocationException) with message Index was outside the bounds of the array.
+> Actual:   No exception should be thrown
+╟─────────────────────────────Failed─────────────────────────────╢
+╠════════════════════════════════════════════════════════════════╣
+╟──Test HeapSort with five elements, sorted in descending order──╢
+> Input:    Test HeapSort with five elements, sorted in descending order
+> Expected: Method threw an exception: (System.Reflection.TargetInvocationException) with message Index was outside the bounds of the array.
+> Actual:   No exception should be thrown
+╟─────────────────────────────Failed─────────────────────────────╢
+╠════════════════════════════════════════════════════════════════╣
+╟───────────────Test HeapSort with random elements───────────────╢
+> Input:    Test HeapSort with random elements
+> Expected: Method threw an exception: (System.Reflection.TargetInvocationException) with message Index was outside the bounds of the array.
+> Actual:   No exception should be thrown
+╟─────────────────────────────Failed─────────────────────────────╢
+╠════════════════════════════════════════════════════════════════╣
+╟───────────────Test HeapBottomUp with empty array───────────────╢
+> Input:    Test HeapBottomUp with empty array
+> Expected: Method threw an exception: (System.Reflection.TargetInvocationException) with message Index was outside the bounds of the array.
+> Actual:   No exception should be thrown
+╟─────────────────────────────Failed─────────────────────────────╢
+╠════════════════════════════════════════════════════════════════╣
+╟───────────────Test HeapBottomUp with one element───────────────╢
+> Input:    Test HeapBottomUp with one element
+> Expected: Method threw an exception: (System.Reflection.TargetInvocationException) with message Index was outside the bounds of the array.
+> Actual:   No exception should be thrown
+╟─────────────────────────────Failed─────────────────────────────╢
+╠════════════════════════════════════════════════════════════════╣
+╟──Test HeapBottomUp with five elements, sorted in random order──╢
+> Input:    Test HeapBottomUp with five elements, sorted in random order
+> Expected: Method threw an exception: (System.Reflection.TargetInvocationException) with message Index was outside the bounds of the array.
+> Actual:   No exception should be thrown
+╟─────────────────────────────Failed─────────────────────────────╢
+╠════════════════════════════════════════════════════════════════╣
+╟─────────────Test MaxKeyDelete with heap of size 1──────────────╢
+> Input:    [1]
+> Expected: [1]
+> Actual:   [1]
+╟─────────────────────────────Passed─────────────────────────────╢
+╠════════════════════════════════════════════════════════════════╣
+╟─────────────Test MaxKeyDelete with heap of size 2──────────────╢
+> Input:    [2,1]
+> Expected: [1,2]
+> Actual:   [1,2]
+╟─────────────────────────────Passed─────────────────────────────╢
+╠════════════════════════════════════════════════════════════════╣
+╟─────────────Test MaxKeyDelete with heap of size 5──────────────╢
+> Input:    [5,4,2,3,1]
+> Expected: [4,3,2,1,5]
+> Actual:   [1,4,2,3,5]
+╟─────────────────────────────Failed─────────────────────────────╢
+╠════════════════════════════════════════════════════════════════╣
+╙─────────────────────────2 / 12 passed──────────────────────────╜
