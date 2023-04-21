@@ -1,0 +1,13 @@
+╔══Code.ExampleTests══╗
+╟──Test if 1 + 1 = 2──╢
+> Input:    1 + 1
+> Expected: 2
+> Actual:   2
+╟───────Passed────────╢
+╠═════════════════════╣
+╠════Test Summary═════╣
+Passed:
+> Test if 1 + 1 = 2
+───────────────────────
+Failed:
+╙────1 / 1 passed─────╜

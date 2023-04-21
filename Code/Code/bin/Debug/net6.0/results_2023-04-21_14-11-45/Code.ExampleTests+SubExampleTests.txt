@@ -1,0 +1,20 @@
+╔══Code.ExampleTests+SubExampleTests══╗
+╟──────────Test if 2 + 2 = 4──────────╢
+> Input:    2 + 2
+> Expected: 4
+> Actual:   4
+╟───────────────Passed────────────────╢
+╠═════════════════════════════════════╣
+╟────────Test throw exception─────────╢
+> Input:    Getting length from null input
+> Expected: An exception of type System.NullReferenceException should be thrown
+> Actual:   An exception of type System.NullReferenceException was thrown
+╟───────────────Passed────────────────╢
+╠═════════════════════════════════════╣
+╠════════════Test Summary═════════════╣
+Passed:
+> Test if 2 + 2 = 4
+> Test throw exception
+───────────────────────────────────────
+Failed:
+╙────────────2 / 2 passed─────────────╜

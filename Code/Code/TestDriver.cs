@@ -6,15 +6,16 @@ using System.Reflection;
 static class TestDriver
 {
     static List<Type> testClasses = new List<Type>();
-    static string testResult = "";
+    static Dictionary<string, TestResult> testResults = new Dictionary<string, TestResult>();
+    static string testOutput = "";
 
     /// <summary>
-    /// Add a test class to the list of classes to be tested.
+    /// Add a number of test classes to the list of classes to be tested.
     /// </summary>
-    /// <param name="testClass">The test class to add</param>
-    public static void AddTestClass(Type testClass)
+    /// <param name="testClasses">The test class to add</param>
+    public static void AddTestClass(params Type[] testClasses)
     {
-        testClasses.Add(testClass);
+        TestDriver.testClasses.AddRange(testClasses);
     }
 
     /// <summary>
@@ -52,23 +53,31 @@ static class TestDriver
             RunTestClass(innerClass, testStartTime);
         }
 
+        // Initialize test results
         int passed = 0;
         int longest = GetLongestTestName(testClass);
-        testResult = "";
+        testOutput = "";
+        testResults = new Dictionary<string, TestResult>();
+
+        // Display the test class name
         Console.ForegroundColor = ConsoleColor.Yellow;
         WriteSeparator(longest, testClass.ToString());
         Console.ResetColor();
         object? instance = Activator.CreateInstance(testClass);
+
+        // Get test methods
         MethodInfo[] methods = testClass.GetMethods().Where(m => m.GetCustomAttributes(typeof(TestAttribute), false).Length > 0).ToArray();
         foreach (MethodInfo method in methods)
         {
             object[] attributes = method.GetCustomAttributes(typeof(TestAttribute), false);
             if (attributes.Length > 0)
             {
+                // Display the test name
                 TestAttribute attribute = (TestAttribute)attributes[0];
                 WriteSeparator(longest, attribute.DisplayName, '─', "╟", "╢");
                 TestResult result = null;
 
+                // Try to run the test
                 try
                 {
                     // If the method returns a TestResult, use that
@@ -81,7 +90,7 @@ static class TestDriver
                     {
                         object? returnValue = method.Invoke(instance, null);
                         result = new TestResult(
-                            attribute.DisplayName, 
+                            attribute.DisplayName,
                             "Method return an object of type " + method.ReturnType.ToString(),
                             "Method should return a TestResult object",
                             false
@@ -101,7 +110,7 @@ static class TestDriver
                 catch (TargetInvocationException e)
                 {
                     result = new TestResult(
-                        attribute.DisplayName, 
+                        attribute.DisplayName,
                         $"Method threw an exception: ({e.GetType()}) with message {e.InnerException.Message}",
                         "No exception should be thrown",
                         false);
@@ -109,16 +118,16 @@ static class TestDriver
                 catch (Exception e)
                 {
                     result = new TestResult(
-                        attribute.DisplayName, 
+                        attribute.DisplayName,
                         $"An exception was thrown: ({e.GetType()}) with message {e.Message}",
                         "No exception should be thrown",
                         false);
                 }
 
-
-                DisplayResult($"{"> Input:", -12}{result.Input}");
-                DisplayResult($"{"> Expected:", -12}{result.Expected}");
-                DisplayResult($"{"> Actual:", -12}{result.Actual}");
+                // Display the test result
+                DisplayResult($"{"> Input:",-12}{result.Input}");
+                DisplayResult($"{"> Expected:",-12}{result.Expected}");
+                DisplayResult($"{"> Actual:",-12}{result.Actual}");
 
                 if (result.Passed)
                 {
@@ -133,12 +142,50 @@ static class TestDriver
                 WriteSeparator(longest, passedStatus, '─', "╟", "╢");
                 Console.ResetColor();
                 WriteSeparator(longest, "", '═', "╠", "╣");
+                testResults.Add(attribute.DisplayName, result);
             }
         }
+        WriteTestSummary(longest);
         Console.ForegroundColor = ConsoleColor.Yellow;
         WriteSeparator(longest, $"{passed} / {methods.Length.ToString()} passed", '─', leftCorner: "╙", rightCorner: "╜");
         Console.ResetColor();
         SaveResults(testClass.ToString(), testStartTime);
+    }
+
+    private static void WriteTestSummary(int longest)
+    {
+        Dictionary<string, TestResult> passedTests = new Dictionary<string, TestResult>();
+        Dictionary<string, TestResult> failedTests = new Dictionary<string, TestResult>();
+        foreach (KeyValuePair<string, TestResult> result in testResults)
+        {
+            if (result.Value.Passed)
+            {
+                passedTests.Add(result.Key, result.Value);
+            }
+            else
+            {
+                failedTests.Add(result.Key, result.Value);
+            }
+        }
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        WriteSeparator(longest, "Test Summary", '═', "╠", "╣");
+        // Display passed tests
+        Console.ForegroundColor = ConsoleColor.Green;
+        DisplayResult("Passed:");
+        foreach (KeyValuePair<string, TestResult> result in passedTests)
+        {
+            DisplayResult($"> {result.Key}");
+        }
+        // Display failed tests
+        Console.ResetColor();
+        WriteSeparator(longest, "", '─', "─", "─");
+        Console.ForegroundColor = ConsoleColor.Red;
+        DisplayResult("Failed:");
+        foreach (KeyValuePair<string, TestResult> result in failedTests)
+        {
+            DisplayResult($"> {result.Key}");
+        }
+        Console.ResetColor();
     }
 
     private static int GetLongestTestName(Type testClass)
@@ -160,9 +207,10 @@ static class TestDriver
         return longest > testClass.ToString().Length ? longest : testClass.ToString().Length;
     }
 
-    private static void DisplayResult(string text){
+    private static void DisplayResult(string text)
+    {
         Console.WriteLine(text);
-        testResult += text + "\n";
+        testOutput += text + "\n";
     }
 
     private static void WriteSeparator(int totalLength, string text = "", char separator = '═', string leftCorner = "╔", string rightCorner = "╗")
@@ -174,7 +222,7 @@ static class TestDriver
         int right = totalLength - length - left;
         string line = $"{leftCorner}{new string(separator, left)}{text}{new string(separator, right)}{rightCorner}";
         Console.WriteLine(line);
-        testResult += line + "\n";
+        testOutput += line + "\n";
     }
 
     private static void SaveResults(string name, DateTime testStartTime)
@@ -185,15 +233,16 @@ static class TestDriver
             Directory.CreateDirectory(path);
         }
         string fileName = $"{name.Replace(" ", "_")}";
-        string filePath = Path.Combine(path, fileName);
+        string filePath = Path.Combine(path, fileName + ".txt");
         using (StreamWriter writer = new StreamWriter(filePath))
         {
-            writer.Write(testResult);
+            writer.Write(testOutput);
         }
     }
 }
 
-static class Assertions {
+static class Assertions
+{
     /// <summary>
     /// Tests if an exception is thrown when a given action is executed
     /// </summary>
@@ -201,23 +250,32 @@ static class Assertions {
     /// <param name="input">The string describing the input</param>
     /// <param name="expectedExceptions">One or more exceptions that are expected to be thrown</param>
     /// <returns>A TestResult object containing the results of the test</returns>
-    public static TestResult AssertThrows(Action action, string input, params Type[] expectedExceptions){
-        try {
+    public static TestResult AssertThrows(Action action, string input, params Type[] expectedExceptions)
+    {
+        try
+        {
             action();
             return new TestResult(input, "An exception of type " + expectedExceptions[0].ToString() + " should be thrown", "No exception was thrown", false);
-        } catch (Exception e){
-            if (expectedExceptions.Contains(e.GetType())){
+        }
+        catch (Exception e)
+        {
+            if (expectedExceptions.Contains(e.GetType()))
+            {
                 return new TestResult(input, "An exception of type " + expectedExceptions[0].ToString() + " should be thrown", "An exception of type " + e.GetType().ToString() + " was thrown", true);
-            } else {
+            }
+            else
+            {
                 return new TestResult(input, "An exception of type " + expectedExceptions[0].ToString() + " should be thrown", "An exception of type " + e.GetType().ToString() + " was thrown", false);
             }
         }
     }
 }
 
-class TestAttribute : System.Attribute {
+class TestAttribute : System.Attribute
+{
     public string DisplayName { get; }
-    public TestAttribute(string displayName) {
+    public TestAttribute(string displayName)
+    {
         DisplayName = displayName;
     }
 }
