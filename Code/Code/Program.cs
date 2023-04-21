@@ -204,40 +204,9 @@ class Program
     static void HeapBottomUp(int[] data)
     {
         int n = data.Length;
-        // If data is empty, stop
-        if (n == 0) return;
         for (int i = (n - 1) / 2; i >= 0; i--)
         {
-            int k = i;
-            int v = data[k];
-            bool heap = false;
-            // Heapify only if there is a left child, and that the array is not already a heap
-            while (!heap && 2*k + 1 <= n - 1)
-            {
-                // Get the left child of the current node
-                int j = 2 * k + 1;
-                if (j < n - 1) // There are two children
-                {
-                    // Getting the bigger child of the two
-                    // data[j]: value of left child
-                    // data[j + 1]: value of right child
-                    if (data[j] < data[j + 1])
-                        j = j + 1;
-                }
-                // Check if the current node value is greater
-                // than the bigger child => heap
-                if (v >= data[j])
-                {
-                    heap = true;
-                }
-                // If not a heap, swap with the bigger child
-                else
-                {
-                    data[k] = data[j];
-                    k = j;
-                }
-            }
-            data[k] = v;
+            // to be completed
         }
     }
 
@@ -245,61 +214,23 @@ class Program
     static void HeapSort(int[] data)
     {
         //Use the HeapBottomUp procedure to convert the array, data, into a heap
-        HeapBottomUp(data);
-
+        //To be completed
 
         //repeatly remove the maximum key from the heap and then rebuild the heap
-        // Stop at n - 2, since there is no need to delete the final node from a
-        // heap with one element
-        for (int v = 0; v < data.Length - 1; v++)
-        {
-            MaxKeyDelete(data, data.Length - v);
-        }
+        //To be completed
     }
 
     //delete the maximum key and rebuild the heap
     static void MaxKeyDelete(int[] data, int size)
     {
-        if (size == 0) return;
-
-        //1. Exchange the root’s key with the last key K of the heap;
+        //Exchange the root’s key with the last key K of the heap;
         int temp = data[0];
         data[0] = data[size - 1];
         data[size - 1] = temp;
 
-        //2. Decrease the heap’s size by 1;
-        int n = size - 1;
-        //3. “Heapify” the complete binary tree.
-        int k = 0; // Only reheapify the root.
-        int v = data[k];
-        bool heap = false;
-        // Heapify only if there is a left child, and that the array is not already a heap
-        while (!heap && 2 * k + 1 <= n - 1)
-        {
-            // Get the left child of the current node
-            int j = 2 * k + 1;
-            if (j < n - 1) // There are two children
-            {
-                // Getting the bigger child of the two
-                // data[j]: value of left child
-                // data[j + 1]: value of right child
-                if (data[j] < data[j + 1])
-                    j = j + 1;
-            }
-            // Check if the current node value is greater
-            // than the bigger child => heap
-            if (v >= data[j])
-            {
-                heap = true;
-            }
-            // If not a heap, swap with the bigger child
-            else
-            {
-                data[k] = data[j];
-                k = j;
-            }
-        }
-        data[k] = v;
+
+        //“Heapify” the complete binary tree.
+        // to be completed
     }
 
 }
